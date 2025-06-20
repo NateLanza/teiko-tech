@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
@@ -54,6 +54,54 @@ def create_app():
     else:
       result = "<h1>No records found</h1>"
     return result
+  
+  # --- API routes ---
+
+  # Yes, it's ridiculous to use GET for creating records, but we're bootstrapping a quick example here. TODO: change to POST
+  @app.route('/api/create', methods=['GET'])
+  def api_create():
+    # All fields as URL parameters
+    params = {k: v for k, v in dict(**dict(request.args)).items()}
+    if 'sample' not in params:
+      return {"error": "Missing required field: sample"}, 400
+    if TrialRecord.query.get(params['sample']):
+      return {"error": "Record with this sample already exists"}, 409
+    try:
+      record = TrialRecord()
+      record.sample = params.get('sample')
+      record.project = params.get('project')
+      record.subject = params.get('subject')
+      record.condition = params.get('condition')
+      record.age = int(params['age']) if params.get('age') else None
+      record.sex = params.get('sex')
+      record.treatment = params.get('treatment')
+      record.response = (params.get('response').lower() == 'yes') if params.get('response') else None
+      record.sample_type = params.get('sample_type')
+      record.time_from_treatment = int(params['time_from_treatment']) if params.get('time_from_treatment') else None
+      record.d8_t_cell = int(params['d8_t_cell']) if params.get('d8_t_cell') else None
+      record.cd4_t_cell = int(params['cd4_t_cell']) if params.get('cd4_t_cell') else None
+      record.nk_cell = int(params['nk_cell']) if params.get('nk_cell') else None
+      record.monocyte = int(params['monocyte']) if params.get('monocyte') else None
+      db.session.add(record)
+      db.session.commit()
+      return {"message": "Record created", "sample": record.sample}, 201
+    except Exception as e:
+      db.session.rollback()
+      return {"error": str(e)}, 400
+
+  # TODO: change to DELETE
+  @app.route('/api/delete/<sample>', methods=['GET'])
+  def api_delete(sample):
+    record = TrialRecord.query.get(sample)
+    if not record:
+      return {"error": "Record not found"}, 404
+    try:
+      db.session.delete(record)
+      db.session.commit()
+      return {"message": f"Record {sample} deleted"}
+    except Exception as e:
+      db.session.rollback()
+      return {"error": str(e)}, 400
 
   return app
 
