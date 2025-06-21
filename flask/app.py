@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
@@ -30,6 +31,7 @@ class TrialRecord(db.Model):
 
 def create_app():
   app = Flask(__name__)
+  CORS(app, origins=['http://localhost:5173']) # Necessary to allow requests from the frontend
   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # save resources by disabling unnecessary tracking
   
@@ -102,6 +104,32 @@ def create_app():
     except Exception as e:
       db.session.rollback()
       return {"error": str(e)}, 400
+    
+  @app.route('/api/list', methods=['GET'])
+  def api_get_all_records():
+    try:
+      records = TrialRecord.query.all()
+      result = []
+      for record in records:
+        result.append({
+          'sample': record.sample,
+          'project': record.project,
+          'subject': record.subject,
+          'condition': record.condition,
+          'age': record.age,
+          'sex': record.sex,
+          'treatment': record.treatment,
+          'response': record.response,
+          'sample_type': record.sample_type,
+          'time_from_treatment': record.time_from_treatment,
+          'd8_t_cell': record.d8_t_cell,
+          'cd4_t_cell': record.cd4_t_cell,
+          'nk_cell': record.nk_cell,
+          'monocyte': record.monocyte
+        })
+      return result, 200
+    except Exception as e:
+      return {"error": str(e)}, 500
 
   return app
 

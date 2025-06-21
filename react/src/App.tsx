@@ -1,24 +1,40 @@
-import { useState } from 'react';
 import './App.css';
+import { useEffect, useState, type SyntheticEvent } from 'react';
+import { Box, Tab } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import type { TrialRecord } from './core/types';
+import { getAllRecords } from './core/api';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [value, setValue] = useState('1');
+  const [records, setRecords] = useState<TrialRecord[]>([]);
+
+  // Fetch records from the API when the component mounts
+  useEffect(() => {
+    getAllRecords().then((data) => {
+      setRecords(data);
+    });
+  }, []);
+
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer"></a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer"></a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <Box sx={{ width: '100%', typography: 'body1' }}>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="Data Overview" value="1" color="white" />
+            <Tab label="Item Two" value="2" color="white" />
+            <Tab label="Item Three" value="3" color="white" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">Data Overview (Part 2)</TabPanel>
+        <TabPanel value="2">Part 3</TabPanel>
+        <TabPanel value="3">Part 4</TabPanel>
+      </TabContext>
+    </Box>
   );
 }
 
