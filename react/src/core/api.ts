@@ -15,3 +15,39 @@ export async function getAllRecords(): Promise<TrialRecord[]> {
       .then((data) => data as TrialRecord[])
   );
 }
+
+export async function createRecord(
+  record: TrialRecord,
+): Promise<{ status: number; data: unknown }> {
+  const response = await fetch(`${API_URL}/create`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(record),
+  });
+
+  const data = await response.json();
+
+  return {
+    status: response.status,
+    data,
+  };
+}
+
+export async function deleteRecord(
+  sample: string,
+): Promise<{ status: number; data: unknown }> {
+  const response = await fetch(`${API_URL}/delete/${sample}`, {
+    method: 'DELETE',
+  });
+
+  const data = await response.json();
+
+  console.log('Delete response:', data);
+
+  return {
+    status: response.status,
+    data,
+  };
+}

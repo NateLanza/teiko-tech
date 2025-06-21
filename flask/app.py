@@ -60,11 +60,9 @@ def create_app():
   
   # --- API routes ---
 
-  # Yes, it's ridiculous to use GET for creating records, but we're bootstrapping a quick example here. TODO: change to POST
-  @app.route('/api/create', methods=['GET'])
+  @app.route('/api/create', methods=['POST'])
   def api_create():
-    # All fields as URL parameters
-    params = {k: v for k, v in dict(**dict(request.args)).items()}
+    params = request.get_json() or {}
     if 'sample' not in params:
       return {"error": "Missing required field: sample"}, 400
     if TrialRecord.query.get(params['sample']):
@@ -93,8 +91,7 @@ def create_app():
       db.session.rollback()
       return {"error": str(e)}, 400
 
-  # TODO: change to DELETE
-  @app.route('/api/delete/<sample>', methods=['GET'])
+  @app.route('/api/delete/<sample>', methods=['DELETE'])
   def api_delete(sample):
     record = TrialRecord.query.get(sample)
     if not record:
