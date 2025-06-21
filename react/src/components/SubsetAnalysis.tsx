@@ -73,14 +73,10 @@ const SubsetAnalysis: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
         This subset is filtered to PMBC samples from melanoma patients treated with
         Miraclib, with a time from treatment start of 0 days.
       </Typography>
-      <Box width="75%" display="inline-block">
-        <DataGrid
-          // For reasons I cannot fathom nor believe, expanding the height of the Card in the other Box
-          // pushes the DataGrid down (even though they're unconnected...) so we get to manually fix that :D
-          style={{ position: 'relative', top: '-235px' }}
-          rows={filteredData}
-          columns={COLUMNS}
-        />
+      {/* For reasons I cannot fathom nor believe, expanding the height of the Card in the other Box
+        pushes the DataGrid down (even though they're unconnected...) so we get to manually fix that :D */}
+      <Box width="75%" display="inline-block" position="relative" top="-235px">
+        <DataGrid rows={filteredData} columns={COLUMNS} />
       </Box>
       <Box width="25%" display="inline-block">
         <Card
