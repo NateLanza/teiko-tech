@@ -28,7 +28,7 @@ function createBoxplotSpec(title: string, numericalField: string = 'value') {
       x: {
         field: numericalField,
         type: 'quantitative',
-        title: 'Value',
+        title: 'Relative Frequency (%)',
       },
       y: {
         field: 'responseLabel',
