@@ -9,14 +9,14 @@ db = SQLAlchemy()
 class TrialRecord(db.Model):
   '''A row from the CSV file representing a trial result'''
   sample = db.Column(db.String, primary_key=True)
-  project = db.Column(db.String, nullable=True)
+  project = db.Column(db.String)
   subject = db.Column(db.String, nullable=True)
   condition = db.Column(
     db.Enum('healthy', 'carcinoma', 'melanoma', name='condition_enum'),
     nullable=True
   )
   age = db.Column(db.Integer, nullable=True)
-  sex = db.Column(db.Enum('M', 'F', name='sex_enum'), nullable=True)
+  sex = db.Column(db.Enum('M', 'F', name='sex_enum'))
   treatment = db.Column(db.Enum('miraclib', 'phauximab', 'none', name='treatment_enum'), nullable=True)
   response = db.Column(db.Enum('yes', 'no'), nullable=True)
   sample_type = db.Column(db.Enum('PBMC', 'WB', name='sample_type_enum'), nullable=True)

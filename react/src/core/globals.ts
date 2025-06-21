@@ -1,10 +1,10 @@
 export type TrialRecord = {
   sample: string; // primary key, required
-  project?: string | null;
+  project: string;
   subject?: string | null;
   condition?: 'healthy' | 'carcinoma' | 'melanoma' | null;
   age?: number | null;
-  sex?: 'M' | 'F' | null;
+  sex: 'M' | 'F';
   treatment?: 'miraclib' | 'phauximab' | 'none' | null;
   response?: 'yes' | 'no' | null;
   sample_type?: 'PBMC' | 'WB' | null;
