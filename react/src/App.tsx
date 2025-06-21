@@ -23,7 +23,7 @@ function App() {
     });
   }, []);
 
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
+  const handleChange = (_: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 

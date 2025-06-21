@@ -20,16 +20,6 @@ const SINGLE_FREQUENCY_COLUMNS = [
   { field: 'percentage', headerName: 'Percentage (%)', width: 150 },
 ];
 
-type FrequencySummaryRow = {
-  sample: string;
-  bCellPct: number;
-  cd8TCellPct: number;
-  cd4TCellPct: number;
-  nkCellPct: number;
-  monocytePct: number;
-  totalCount: number;
-};
-
 const DataOverview: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
   const singleRows = useMemo(() => {
     const rows: SingleFrequencyRow[] = [];
