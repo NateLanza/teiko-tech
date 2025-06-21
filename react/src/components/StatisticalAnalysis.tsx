@@ -2,9 +2,12 @@ import React, { useMemo } from 'react';
 import { totalCellCount, type TrialRecord } from '../core/globals';
 import { VegaLite } from 'react-vega';
 import { testSignificance } from '../core/stats-tests';
+import { Box } from '@mui/material';
 
-const PLOT_WIDTH = 800;
+// This isn't responsive when you drag the window, but it works on page load which is good enough for this demo
+const PLOT_WIDTH = window.innerWidth - 500;
 const PLOT_HEIGHT = 250;
+const PLOT_STYLE = { margin: '5px', display: 'inline-block' };
 
 function createBoxplotSpec(title: string, numericalField: string = 'value') {
   return {
@@ -177,41 +180,51 @@ export const StatisticalAnalysis: React.FC<{ data: TrialRecord[] }> = ({ data })
   return (
     <div>
       <h2>Statistical Analysis</h2>
-      <p>{bCellResult.interpretation}</p>
-      <p>{cd8TCellResult.interpretation}</p>
-      <p>{cd4TCellResult.interpretation}</p>
-      <p>{nkCellResult.interpretation}</p>
-      <p>{monocyteResult.interpretation}</p>
-      <VegaLite
-        actions={false}
-        style={{ margin: '5px' }}
-        spec={bCellSpec}
-        data={{ source: bCellData }}
-      />
-      <VegaLite
-        actions={false}
-        style={{ margin: '5px' }}
-        spec={cd8TCellSpec}
-        data={{ source: cd8TCellData }}
-      />
-      <VegaLite
-        actions={false}
-        style={{ margin: '5px' }}
-        spec={cd4TCellSpec}
-        data={{ source: cd4TCellData }}
-      />
-      <VegaLite
-        actions={false}
-        style={{ margin: '5px' }}
-        spec={nkCellSpec}
-        data={{ source: nkCellData }}
-      />
-      <VegaLite
-        actions={false}
-        style={{ margin: '5px' }}
-        spec={monocyteSpec}
-        data={{ source: monocyteData }}
-      />
+      <Box display="flex" alignItems="center" marginBottom={2}>
+        <VegaLite
+          actions={false}
+          style={PLOT_STYLE}
+          spec={bCellSpec}
+          data={{ source: bCellData }}
+        />
+        <span>{bCellResult.interpretation}</span>
+      </Box>
+      <Box display="flex" alignItems="center" marginBottom={2}>
+        <VegaLite
+          actions={false}
+          style={PLOT_STYLE}
+          spec={cd8TCellSpec}
+          data={{ source: cd8TCellData }}
+        />
+        <span>{cd8TCellResult.interpretation}</span>
+      </Box>
+      <Box display="flex" alignItems="center" marginBottom={2}>
+        <VegaLite
+          actions={false}
+          style={PLOT_STYLE}
+          spec={cd4TCellSpec}
+          data={{ source: cd4TCellData }}
+        />
+        <span>{cd4TCellResult.interpretation}</span>
+      </Box>
+      <Box display="flex" alignItems="center" marginBottom={2}>
+        <VegaLite
+          actions={false}
+          style={PLOT_STYLE}
+          spec={nkCellSpec}
+          data={{ source: nkCellData }}
+        />
+        <span>{nkCellResult.interpretation}</span>
+      </Box>
+      <Box display="flex" alignItems="center" marginBottom={2}>
+        <VegaLite
+          actions={false}
+          style={PLOT_STYLE}
+          spec={monocyteSpec}
+          data={{ source: monocyteData }}
+        />
+        <span>{monocyteResult.interpretation}</span>
+      </Box>
     </div>
   );
 };
