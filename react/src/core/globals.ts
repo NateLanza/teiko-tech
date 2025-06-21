@@ -8,7 +8,7 @@ export type TrialRecord = {
   treatment?: 'miraclib' | 'phauximab' | 'none' | null;
   response?: 'yes' | 'no' | null;
   sample_type?: 'PBMC' | 'WB' | null;
-  time_from_treatment?: number | null;
+  time_from_treatment_start?: number | null;
   b_cell: number;
   cd8_t_cell: number;
   cd4_t_cell: number;

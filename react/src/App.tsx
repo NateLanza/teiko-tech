@@ -6,6 +6,7 @@ import type { TrialRecord } from './core/globals';
 import { getAllRecords } from './core/api';
 import DataOverview from './components/DataOverview';
 import { StatisticalAnalysis } from './components/StatisticalAnalysis';
+import SubsetAnalysis from './components/SubsetAnalysis';
 
 const darkTheme = createTheme({
   palette: {
@@ -36,7 +37,7 @@ function App() {
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="Data Overview" value="1" color="white" />
               <Tab label="Statistical Analysis" value="2" color="white" />
-              <Tab label="Item Three" value="3" color="white" />
+              <Tab label="Data Subset Analysis" value="3" color="white" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -45,7 +46,9 @@ function App() {
           <TabPanel value="2">
             <StatisticalAnalysis data={records} />
           </TabPanel>
-          <TabPanel value="3">Part 4</TabPanel>
+          <TabPanel value="3">
+            <SubsetAnalysis data={records} />
+          </TabPanel>
         </TabContext>
       </Box>
     </ThemeProvider>

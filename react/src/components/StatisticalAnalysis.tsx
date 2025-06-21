@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { totalCellCount, type TrialRecord } from '../core/globals';
 import { VegaLite } from 'react-vega';
-import { testSignificance } from '../core/stats-tests';
+import { testSignificance } from '../core/statsTests';
 import { Box } from '@mui/material';
 
 // This isn't responsive when you drag the window, but it works on page load which is good enough for this demo
