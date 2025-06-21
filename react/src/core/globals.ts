@@ -29,3 +29,9 @@ export const CELL_NAMES: CellName[] = [
 export function totalCellCount(record: TrialRecord): number {
   return CELL_NAMES.reduce((sum, cell) => sum + (record[cell] || 0), 0);
 }
+
+export const CARD_STYLE = {
+  margin: '10px',
+  border: '1px solid #ccc',
+  borderRadius: '8px',
+};

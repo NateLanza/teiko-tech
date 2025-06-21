@@ -74,7 +74,8 @@ const SubsetAnalysis: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
         Miraclib, with a time from treatment start of 0 days.
       </Typography>
       {/* For reasons I cannot fathom nor believe, expanding the height of the Card in the other Box
-        pushes the DataGrid down (even though they're unconnected...) so we get to manually fix that :D */}
+        pushes the DataGrid down (even though they're unconnected...) so we get to manually fix that :D
+        normally I would dig into this more but this works for these purposes */}
       <Box width="75%" display="inline-block" position="relative" top="-235px">
         <DataGrid rows={filteredData} columns={COLUMNS} />
       </Box>
