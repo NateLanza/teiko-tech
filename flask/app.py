@@ -21,7 +21,8 @@ class TrialRecord(db.Model):
   response = db.Column(db.Boolean, nullable=True)
   sample_type = db.Column(db.Enum('PBMC', 'WB', name='sample_type_enum'), nullable=True)
   time_from_treatment = db.Column(db.Integer, nullable=True)
-  d8_t_cell = db.Column(db.Integer, nullable=True)
+  b_cell = db.Column(db.Integer, nullable=True)
+  cd8_t_cell = db.Column(db.Integer, nullable=True)
   cd4_t_cell = db.Column(db.Integer, nullable=True)
   nk_cell = db.Column(db.Integer, nullable=True)
   monocyte = db.Column(db.Integer, nullable=True)
@@ -80,7 +81,8 @@ def create_app():
       record.response = (params.get('response').lower() == 'yes') if params.get('response') else None
       record.sample_type = params.get('sample_type')
       record.time_from_treatment = int(params['time_from_treatment']) if params.get('time_from_treatment') else None
-      record.d8_t_cell = int(params['d8_t_cell']) if params.get('d8_t_cell') else None
+      record.b_cell = int(params['b_cell']) if params.get('b_cell') else None
+      record.cd8_t_cell = int(params['cd8_t_cell']) if params.get('cd8_t_cell') else None
       record.cd4_t_cell = int(params['cd4_t_cell']) if params.get('cd4_t_cell') else None
       record.nk_cell = int(params['nk_cell']) if params.get('nk_cell') else None
       record.monocyte = int(params['monocyte']) if params.get('monocyte') else None
@@ -122,7 +124,7 @@ def create_app():
           'response': record.response,
           'sample_type': record.sample_type,
           'time_from_treatment': record.time_from_treatment,
-          'd8_t_cell': record.d8_t_cell,
+          'cd8_t_cell': record.cd8_t_cell,
           'cd4_t_cell': record.cd4_t_cell,
           'nk_cell': record.nk_cell,
           'monocyte': record.monocyte
@@ -167,7 +169,8 @@ def load_csv_data(csv_path):
         record.response = row.get('response') == 'yes' if row.get('response') else None
         record.sample_type = row.get('sample_type')
         record.time_from_treatment = row.get('time_from_treatment')
-        record.d8_t_cell = row.get('d8_t_cell')
+        record.b_cell = row.get('b_cell')
+        record.cd8_t_cell = row.get('cd8_t_cell')
         record.cd4_t_cell = row.get('cd4_t_cell')
         record.nk_cell = row.get('nk_cell')
         record.monocyte = row.get('monocyte')
