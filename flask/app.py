@@ -21,11 +21,11 @@ class TrialRecord(db.Model):
   response = db.Column(db.Boolean, nullable=True)
   sample_type = db.Column(db.Enum('PBMC', 'WB', name='sample_type_enum'), nullable=True)
   time_from_treatment = db.Column(db.Integer, nullable=True)
-  b_cell = db.Column(db.Integer, nullable=True)
-  cd8_t_cell = db.Column(db.Integer, nullable=True)
-  cd4_t_cell = db.Column(db.Integer, nullable=True)
-  nk_cell = db.Column(db.Integer, nullable=True)
-  monocyte = db.Column(db.Integer, nullable=True)
+  b_cell = db.Column(db.Integer)
+  cd8_t_cell = db.Column(db.Integer)
+  cd4_t_cell = db.Column(db.Integer)
+  nk_cell = db.Column(db.Integer)
+  monocyte = db.Column(db.Integer)
 
   def __repr__(self):
     return f'<TrialRecord {self.sample}>'

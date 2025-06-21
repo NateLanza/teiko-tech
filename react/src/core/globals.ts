@@ -6,14 +6,26 @@ export type TrialRecord = {
   age?: number | null;
   sex?: 'M' | 'F' | null;
   treatment?: 'miraclib' | 'phauximab' | 'none' | null;
-  response?: boolean | null;
+  response?: 'yes' | 'no' | null;
   sample_type?: 'PBMC' | 'WB' | null;
   time_from_treatment?: number | null;
-  b_cell?: number | null;
-  cd8_t_cell?: number | null;
-  cd4_t_cell?: number | null;
-  nk_cell?: number | null;
-  monocyte?: number | null;
+  b_cell: number;
+  cd8_t_cell: number;
+  cd4_t_cell: number;
+  nk_cell: number;
+  monocyte: number;
 };
 
 export type CellName = 'b_cell' | 'cd8_t_cell' | 'cd4_t_cell' | 'nk_cell' | 'monocyte';
+
+export const CELL_NAMES: CellName[] = [
+  'b_cell',
+  'cd8_t_cell',
+  'cd4_t_cell',
+  'nk_cell',
+  'monocyte',
+];
+
+export function totalCellCount(record: TrialRecord): number {
+  return CELL_NAMES.reduce((sum, cell) => sum + (record[cell] || 0), 0);
+}
