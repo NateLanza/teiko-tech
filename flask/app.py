@@ -18,7 +18,7 @@ class TrialRecord(db.Model):
   age = db.Column(db.Integer, nullable=True)
   sex = db.Column(db.Enum('M', 'F', name='sex_enum'), nullable=True)
   treatment = db.Column(db.Enum('miraclib', 'phauximab', 'none', name='treatment_enum'), nullable=True)
-  response = db.Column(db.Boolean, nullable=True)
+  response = db.Column(db.Enum('yes', 'no'), nullable=True)
   sample_type = db.Column(db.Enum('PBMC', 'WB', name='sample_type_enum'), nullable=True)
   time_from_treatment = db.Column(db.Integer, nullable=True)
   b_cell = db.Column(db.Integer)
@@ -78,7 +78,7 @@ def create_app():
       record.age = int(params['age']) if params.get('age') else None
       record.sex = params.get('sex')
       record.treatment = params.get('treatment')
-      record.response = (params.get('response').lower() == 'yes') if params.get('response') else None
+      record.response = params.get('response')
       record.sample_type = params.get('sample_type')
       record.time_from_treatment = int(params['time_from_treatment']) if params.get('time_from_treatment') else None
       record.b_cell = int(params['b_cell']) if params.get('b_cell') else None
@@ -124,6 +124,7 @@ def create_app():
           'response': record.response,
           'sample_type': record.sample_type,
           'time_from_treatment': record.time_from_treatment,
+          'b_cell': record.b_cell,
           'cd8_t_cell': record.cd8_t_cell,
           'cd4_t_cell': record.cd4_t_cell,
           'nk_cell': record.nk_cell,
@@ -166,7 +167,7 @@ def load_csv_data(csv_path):
         record.age = row.get('age')
         record.sex = row.get('sex')
         record.treatment = row.get('treatment')
-        record.response = row.get('response') == 'yes' if row.get('response') else None
+        record.response = row.get('response') if row.get('response') in ['yes', 'no'] else None
         record.sample_type = row.get('sample_type')
         record.time_from_treatment = row.get('time_from_treatment')
         record.b_cell = row.get('b_cell')
