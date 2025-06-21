@@ -1,4 +1,4 @@
-import type { TrialRecord } from './types';
+import type { TrialRecord } from './globals';
 
 const API_URL = 'http://localhost:5000/api';
 

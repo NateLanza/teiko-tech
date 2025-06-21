@@ -2,9 +2,10 @@ import './App.css';
 import { useEffect, useState, type SyntheticEvent } from 'react';
 import { Box, createTheme, Tab, ThemeProvider } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import type { TrialRecord } from './core/types';
+import type { TrialRecord } from './core/globals';
 import { getAllRecords } from './core/api';
 import DataOverview from './components/DataOverview';
+import { StatisticalAnalysis } from './components/StatisticalAnalysis';
 
 const darkTheme = createTheme({
   palette: {
@@ -34,14 +35,16 @@ function App() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="Data Overview" value="1" color="white" />
-              <Tab label="Item Two" value="2" color="white" />
+              <Tab label="Statistical Analysis" value="2" color="white" />
               <Tab label="Item Three" value="3" color="white" />
             </TabList>
           </Box>
           <TabPanel value="1">
             <DataOverview data={records} />
           </TabPanel>
-          <TabPanel value="2">Part 3</TabPanel>
+          <TabPanel value="2">
+            <StatisticalAnalysis data={records} />
+          </TabPanel>
           <TabPanel value="3">Part 4</TabPanel>
         </TabContext>
       </Box>

@@ -1,5 +1,10 @@
 import React, { useMemo } from 'react';
-import type { CellName, TrialRecord } from '../core/types';
+import {
+  CELL_NAMES,
+  totalCellCount,
+  type CellName,
+  type TrialRecord,
+} from '../core/globals';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -23,20 +28,12 @@ const SINGLE_FREQUENCY_COLUMNS = [
 const DataOverview: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
   const singleRows = useMemo(() => {
     const rows: SingleFrequencyRow[] = [];
-    const cellNames: CellName[] = [
-      'b_cell',
-      'cd8_t_cell',
-      'cd4_t_cell',
-      'nk_cell',
-      'monocyte',
-    ];
 
     // Iterate through each record
     data.forEach((record) => {
-      const totalCount = cellNames.reduce((sum, cell) => sum + (record[cell] || 0), 0);
-      console.log(`Processing sample: ${record.sample}, Total Count: ${totalCount}`);
+      const totalCount = totalCellCount(record);
       if (totalCount > 0) {
-        cellNames.forEach((cell) => {
+        CELL_NAMES.forEach((cell) => {
           const count = record[cell] || 0;
           if (count > 0) {
             rows.push({
@@ -54,8 +51,6 @@ const DataOverview: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
 
     return rows;
   }, [data]);
-
-  console.log('Single Frequency Rows:', singleRows);
 
   return (
     <Box>
