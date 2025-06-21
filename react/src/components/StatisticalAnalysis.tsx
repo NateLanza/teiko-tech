@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { totalCellCount, type TrialRecord } from '../core/globals';
 import { VegaLite } from 'react-vega';
+import { testSignificance } from '../core/stats-tests';
 
 const PLOT_WIDTH = 800;
 const PLOT_HEIGHT = 250;
@@ -106,8 +107,6 @@ export const StatisticalAnalysis: React.FC<{ data: TrialRecord[] }> = ({ data })
     [filteredData],
   );
 
-  console.log(bCellData);
-
   const cd8TCellData: PatientVegaElement[] = useMemo(
     () =>
       filteredData.map((record) => ({
@@ -144,14 +143,75 @@ export const StatisticalAnalysis: React.FC<{ data: TrialRecord[] }> = ({ data })
     [filteredData],
   );
 
+  // We use the Mann-Whitney U test to compare the distributions of responders and non-responders
+  const bCellResult = useMemo(() => {
+    const responders = bCellData.filter((d) => d.response).map((d) => d.value);
+    const nonResponders = bCellData.filter((d) => !d.response).map((d) => d.value);
+    return testSignificance(responders, nonResponders, 'B cell');
+  }, [bCellData]);
+
+  const cd8TCellResult = useMemo(() => {
+    const responders = cd8TCellData.filter((d) => d.response).map((d) => d.value);
+    const nonResponders = cd8TCellData.filter((d) => !d.response).map((d) => d.value);
+    return testSignificance(responders, nonResponders, 'CD8 T cell');
+  }, [cd8TCellData]);
+
+  const cd4TCellResult = useMemo(() => {
+    const responders = cd4TCellData.filter((d) => d.response).map((d) => d.value);
+    const nonResponders = cd4TCellData.filter((d) => !d.response).map((d) => d.value);
+    return testSignificance(responders, nonResponders, 'CD4 T cell');
+  }, [cd4TCellData]);
+
+  const nkCellResult = useMemo(() => {
+    const responders = nkCellData.filter((d) => d.response).map((d) => d.value);
+    const nonResponders = nkCellData.filter((d) => !d.response).map((d) => d.value);
+    return testSignificance(responders, nonResponders, 'NK cell');
+  }, [nkCellData]);
+
+  const monocyteResult = useMemo(() => {
+    const responders = monocyteData.filter((d) => d.response).map((d) => d.value);
+    const nonResponders = monocyteData.filter((d) => !d.response).map((d) => d.value);
+    return testSignificance(responders, nonResponders, 'Monocyte');
+  }, [monocyteData]);
+
   return (
     <div>
       <h2>Statistical Analysis</h2>
-      <VegaLite actions={false} spec={bCellSpec} data={{ source: bCellData }} />
-      <VegaLite actions={false} spec={cd8TCellSpec} data={{ source: cd8TCellData }} />
-      <VegaLite actions={false} spec={cd4TCellSpec} data={{ source: cd4TCellData }} />
-      <VegaLite actions={false} spec={nkCellSpec} data={{ source: nkCellData }} />
-      <VegaLite actions={false} spec={monocyteSpec} data={{ source: monocyteData }} />
+      <p>{bCellResult.interpretation}</p>
+      <p>{cd8TCellResult.interpretation}</p>
+      <p>{cd4TCellResult.interpretation}</p>
+      <p>{nkCellResult.interpretation}</p>
+      <p>{monocyteResult.interpretation}</p>
+      <VegaLite
+        actions={false}
+        style={{ margin: '5px' }}
+        spec={bCellSpec}
+        data={{ source: bCellData }}
+      />
+      <VegaLite
+        actions={false}
+        style={{ margin: '5px' }}
+        spec={cd8TCellSpec}
+        data={{ source: cd8TCellData }}
+      />
+      <VegaLite
+        actions={false}
+        style={{ margin: '5px' }}
+        spec={cd4TCellSpec}
+        data={{ source: cd4TCellData }}
+      />
+      <VegaLite
+        actions={false}
+        style={{ margin: '5px' }}
+        spec={nkCellSpec}
+        data={{ source: nkCellData }}
+      />
+      <VegaLite
+        actions={false}
+        style={{ margin: '5px' }}
+        spec={monocyteSpec}
+        data={{ source: monocyteData }}
+      />
     </div>
   );
 };
