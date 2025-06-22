@@ -32,7 +32,7 @@ class TrialRecord(db.Model):
 
 def create_app():
   app = Flask(__name__)
-  CORS(app, origins=['http://localhost:5173']) # Necessary to allow requests from the frontend
+  CORS(app, origins=['*']) # Would never allow all in a real app, but okay for this example
   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # save resources by disabling unnecessary tracking
   
