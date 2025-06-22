@@ -59,4 +59,4 @@ Since this is a one-off for a job application, I cut some corners to save myself
 - I was not able to consult the client more specifically regarding their needs. I like to be involved in the requirements gathering and design process, and I'd probably discuss with the team some changes to this app IRL. For example, I'd like to have the Data Overview use a single row per sample, with columns for relative frequency of each population, rather than spreading populations into different rows and massively expanding the table size.
 
 ## Thanks!
-for taking the time to read this, go through my code, and check out the app. I appreciate your consideration and I'm hoping to speak more with the team soon!
+For taking the time to read this, go through my code, and check out the app. I appreciate your consideration and I'm hoping to speak more with the team soon!
