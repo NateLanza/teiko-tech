@@ -1,6 +1,7 @@
 import type { TrialRecord } from './globals';
 
-const API_URL = 'http://localhost:5000/api';
+const API_IP = '3.134.233.172'; // Normally this should go in .env but yadda yadda example
+const API_URL = `http://${API_IP}:5000/api`;
 
 export async function getAllRecords(): Promise<TrialRecord[]> {
   return (
