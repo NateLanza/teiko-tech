@@ -63,7 +63,7 @@ export const DataManagement: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
   const [age, setAge] = useState('');
   const [sex, setSex] = useState('');
   const [treatment, setTreatment] = useState('');
-  const [response, setResponse] = useState<string | null>(null);
+  const [response, setResponse] = useState('');
   const [sampleType, setSampleType] = useState('');
   const [timeFromTreatmentStart, setTimeFromTreatmentStart] = useState('');
   const [bCellCount, setBCellCount] = useState('');
