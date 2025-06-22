@@ -145,7 +145,12 @@ export const DataManagement: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
           onClose={() => setAlert(null)}
           sx={{ marginBottom: '20px' }}
         >
-          {alert.message}
+          {alert.message.endsWith('.') ? `${alert.message} ` : `${alert.message}. `}
+          {alert.type === 'success' && (
+            <>
+              <a href=".">Refresh the page</a> to see your changes in the data table.
+            </>
+          )}
         </Alert>
       )}
       {/* Unbelievably, expanding the card in the OTHER BOX pushes this datagrid down, so this is an acceptable fix for these purposes */}
