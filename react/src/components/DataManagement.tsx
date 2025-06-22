@@ -63,7 +63,7 @@ export const DataManagement: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
   const [age, setAge] = useState('');
   const [sex, setSex] = useState('');
   const [treatment, setTreatment] = useState('');
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState<string | null>(null);
   const [sampleType, setSampleType] = useState('');
   const [timeFromTreatmentStart, setTimeFromTreatmentStart] = useState('');
   const [bCellCount, setBCellCount] = useState('');
@@ -93,7 +93,7 @@ export const DataManagement: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
       age: age ? parseInt(age, 10) : undefined,
       sex,
       treatment,
-      response,
+      response: response === 'none' ? null : response,
       sample_type: sampleType,
       time_from_treatment_start: timeFromTreatmentStart
         ? parseInt(timeFromTreatmentStart, 10)
@@ -266,6 +266,7 @@ export const DataManagement: React.FC<{ data: TrialRecord[] }> = ({ data }) => {
               >
                 <MenuItem value="yes">Yes</MenuItem>
                 <MenuItem value="no">No</MenuItem>
+                <MenuItem value="none">None</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth>
