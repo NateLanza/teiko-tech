@@ -1,7 +1,7 @@
 # Teiko Technical Challenge
 
 ## Running
-**This app is deployed and can be viewed [here](http://3.134.233.172:5173/).** Alternatively, refer to the instructions below to run this locally if you wish. 
+**This app was deployed and could be viewed [here](http://3.134.233.172:5173/), but I've since terminated the AWS instance.** Alternatively, refer to the instructions below to run this locally if you wish. 
 
 ### Manual Setup and Run (Difficulty Level: Developer)
 This guide assumes you already have python and NPM installed on your machine.
